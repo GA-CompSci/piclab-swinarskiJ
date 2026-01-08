@@ -1,10 +1,6 @@
 import java.awt.*;
-import java.awt.font.*;
-import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-import java.text.*;
-import java.util.*;
-import java.util.List; // resolves problem with java.awt.List and java.util.List
+import java.util.function.Consumer;
 
 /**
  * A class that represents a picture. This class inherits from SimplePicture and
@@ -103,6 +99,12 @@ public class Picture extends SimplePicture {
     /** Method to set the blue to 0 */
     public void zeroBlue() {
         Pixel[][] pixels = this.getPixels2D();
+        //2D traversal
+        for(Pixel[] row : pixels){
+            for(Pixel p : row){
+                p.setBlue(0);
+            }
+        }
 
     }
 
@@ -111,33 +113,65 @@ public class Picture extends SimplePicture {
      */
     public void keepOnlyBlue() {
         Pixel[][] pixels = this.getPixels2D();
+        //2D traversal
+        for(Pixel[] row : pixels){
+            for(Pixel p : row){
+                p.setGreen(0);
+                p.setRed(0);
+            }
+        }
 
     }
 
     /** Method that keeps only the red color */
     public void keepOnlyRed() {
         Pixel[][] pixels = this.getPixels2D();
+        for(Pixel[] row : pixels){
+            for(Pixel p : row){
+                p.setGreen(0);
+                p.setBlue(0);
+            }
+        }
 
     }
 
     /** Method that keeps only the green color */
     public void keepOnlyGreen() {
         Pixel[][] pixels = this.getPixels2D();
-        // traverse the rows
-        // traverse the columns
+        for(Pixel[] row : pixels){
+            for(Pixel p : row){
+                p.setRed(0);
+                p.setBlue(0);
+            }
+        }
 
     }
 
     /** Method that negates the colors in the picture */
     public void negate() {
         Pixel[][] pixels = this.getPixels2D();
+        for(Pixel[] row : pixels){
+            for(Pixel p : row){
+                p.setRed(255-p.getRed());
+                p.setGreen(255-p.getGreen());
+                p.setBlue(255-p.getBlue());
+            }
+        }
 
     }
 
     /** Method that makes the picture all shades of gray */
     public void grayscale() {
         Pixel[][] pixels = this.getPixels2D();
-
+        
+        for(Pixel[] row : pixels){
+            for(Pixel p : row){
+                int avg = (p.getRed()+p.getGreen()+p.getBlue())/3;
+                p.setRed(avg);
+                p.setGreen(avg);
+                p.setBlue(avg);
+            }
+        }
     }
 
     /**
@@ -145,6 +179,13 @@ public class Picture extends SimplePicture {
      */
     public void fixUnderwater() {
         Pixel[][] grid = this.getPixels2D();
+        for(Pixel[] row : grid){
+            for(Pixel g : row){
+                g.setBlue((g.getBlue())/2);
+                g.setGreen((g.getGreen()));
+                g.setRed((g.getRed())*4);
+            }
+        }
 
     }
 
